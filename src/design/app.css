@@ -1,0 +1,1089 @@
+/* Page-level patterns the design system leaves to the app, plus the few things this
+   portfolio needs that no card covers (a lightbox, a video figure, a contributor list).
+   Everything here is built from the system's own tokens — no new colours, no new radii. */
+
+/* ---------- page frame ---------- */
+/* Declare the scheme for each theme: it makes the browser style scrollbars, form controls and
+   the canvas to match, and it opts the cream theme out of Chrome's auto-dark inversion, which
+   would otherwise repaint it near-black. */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+.fl-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+.fl-root > main {
+  flex: 1;
+}
+
+.fl-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: var(--space-3) var(--space-5);
+  background: var(--surface-elevated);
+  border: var(--border-control) solid var(--accent);
+  border-radius: var(--radius-button);
+  color: var(--text);
+  font: 600 15px/20px var(--font-sans);
+  text-decoration: none;
+}
+.fl-skip:focus {
+  left: var(--space-4);
+  top: var(--space-4);
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ---------- section-header / detail-header rows (page styles in the system's screens) ---------- */
+.dt-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+.dt-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex: none;
+}
+@media (max-width: 767px) {
+  .dt-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+  .dt-actions {
+    width: 100%;
+  }
+  .dt-actions .fl-btn {
+    flex: 1;
+  }
+}
+
+.fl-stack {
+  display: grid;
+  gap: var(--space-6);
+}
+.fl-stack--lg {
+  gap: var(--space-8);
+}
+
+/* ---------- a `.fl-link` that is a <button> ---------- */
+.fl-link--plain {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* ---------- timeline without an org square ---------- */
+/* The system's `.fl-tl__head` reserves a 48px column for a logo tile. The roles show no tile,
+   so the column goes and the body copy no longer needs the 64px indent that lined up under it. */
+.fl-tl__head--nologo {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.fl-tl__head--nologo ~ .fl-tl__loc,
+.fl-tl__head--nologo ~ .fl-bullets {
+  margin-left: 0;
+}
+/* Keep the date clear of the role. The system's own mobile rule drops the date onto its own row
+   by way of the logo column, which this variant no longer has — so without this the two sit side
+   by side and collide, squeezing the employer's name down to one word per line. */
+@media (max-width: 767px) {
+  .fl-tl__head--nologo {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-2);
+  }
+  .fl-tl__head--nologo .fl-tl__date {
+    grid-column: 1;
+    margin-top: 0;
+    white-space: normal;
+  }
+  /* location and the "part-time, concurrent with studies" note flow instead of columnising */
+  .fl-tl__loc {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------- timeline card: a row of actions under the bullets ---------- */
+.fl-tl__actions {
+  margin: var(--space-4) 0 0 64px;
+}
+@media (max-width: 767px) {
+  .fl-tl__actions {
+    margin-left: 0;
+  }
+}
+/* the certification cards put an illustration in the logo square rather than initials */
+.fl-logo > .fl-illo {
+  width: 30px;
+  height: 30px;
+}
+.fl-logo--lg > .fl-illo {
+  width: 34px;
+  height: 34px;
+}
+
+/* bullets inside `.fl-prose` do not need the timeline's 64px indent */
+.fl-bullets--flush {
+  margin-left: 0;
+}
+
+/* ---------- hero, flipped ---------- */
+/* The system's hero puts the text in 7 columns on the left and the portrait in 5 on the right.
+   This portrait faces right, so the two are swapped and it looks into the page. Below 1024px
+   the system already stacks the portrait on top, which is what we want either way. */
+.fl-hero__in--flip {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+.fl-hero__in--flip .fl-hero__art {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 14px;
+}
+@media (max-width: 1023px) {
+  .fl-hero__in--flip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fl-hero__in--flip .fl-hero__art {
+    padding-left: 0;
+  }
+}
+
+/* ---------- tech stack ---------- */
+/* Real brand marks rather than a generic glyph, each on its own tile. The marks are
+   silhouettes in `accent` so the palette stays gold-on-maroon and Flask (near-black in its
+   own colours) stays visible. */
+.fl-stackgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* On a phone the tiles wrap inside the card. They used to scroll sideways with a negative
+   margin so one could peek past the card edge, but with no fade or arrow that read as a clipped
+   tile rather than an affordance. The group tabs keep the section short enough to just wrap. */
+@media (max-width: 767px) {
+  .fl-stackgrid {
+    grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  }
+}
+.fl-stackitem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2);
+  border: var(--border-hair) solid var(--accent-line);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  text-align: center;
+  min-height: 72px;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out, transform 0.15s ease-out;
+}
+.fl-stackitem:hover {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+  transform: translateY(-2px);
+}
+.fl-techlogo {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: block;
+  color: var(--accent);
+}
+.fl-stackitem__name {
+  font: 500 11px/14px var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- stack: all groups on desktop, switchable on a phone ---------- */
+.fl-stackx__tabs {
+  display: none;
+  margin-bottom: var(--space-5);
+}
+.fl-stackx__groups:not(.fl-grid-3) {
+  display: grid;
+  gap: var(--space-4);
+}
+@media (max-width: 767px) {
+  .fl-stackx__tabs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  /* one panel at a time */
+  .fl-stackx__panel {
+    display: none;
+  }
+  .fl-stackx__panel.is-active {
+    display: block;
+  }
+}
+
+/* the home sidebar carries both forms; CSS picks one so there is no viewport listener */
+.fl-stackswap__narrow {
+  display: none;
+}
+@media (max-width: 767px) {
+  .fl-stackswap__wide {
+    display: none;
+  }
+  .fl-stackswap__narrow {
+    display: block;
+  }
+}
+
+/* ---------- published papers ---------- */
+.fl-papers {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paper;
+}
+.fl-papers li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-hair) solid var(--outline);
+}
+.fl-papers li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.fl-papers__n {
+  font: 500 13px/28px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.fl-papers__title {
+  margin: 0;
+  font: 400 18px/28px var(--font-sans);
+  color: var(--text);
+}
+.fl-papers__title a {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.fl-papers__title a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.fl-papers__title .fl-i {
+  margin-left: 6px;
+  color: var(--accent);
+  vertical-align: baseline;
+}
+.fl-papers__meta {
+  margin: var(--space-2) 0 0;
+  font: 500 12px/18px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.fl-papers__authors {
+  margin: var(--space-1) 0 0;
+  font: 400 14px/22px var(--font-sans);
+  color: var(--text-muted);
+}
+@media (max-width: 767px) {
+  .fl-papers li {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/* the org square can hold a real logo instead of initials */
+.fl-logo--img {
+  background: var(--brand-offwhite);
+  padding: 5px;
+}
+.fl-logo--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- adaptive screenshot box ---------- */
+/* Nothing here crops. The box takes its height from the image, and the measured shape only
+   decides how much height the image may take — a wide banner reads fine small, a phone mockup
+   needs more before it becomes a stamp. See AdaptiveImage.jsx. */
+.fl-shot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  background: var(--surface);
+  border: var(--border-hair) solid var(--outline);
+}
+.fl-shot img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* the hero on a project page */
+.fl-shot--page {
+  margin-top: var(--space-10);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.fl-shot--page.is-wide img,
+.fl-shot--page.is-measuring img {
+  max-height: 620px;
+}
+.fl-shot--page.is-tall {
+  padding: var(--space-6);
+}
+.fl-shot--page.is-tall img {
+  max-height: 560px;
+}
+
+/* the hero inside the project modal */
+.fl-shot--modal {
+  border: 0;
+  border-bottom: var(--border-hair) solid var(--outline);
+}
+.fl-shot--modal.is-wide img,
+.fl-shot--modal.is-measuring img {
+  max-height: min(330px, 42vh);
+}
+.fl-shot--modal.is-tall {
+  padding: var(--space-4);
+}
+.fl-shot--modal.is-tall img {
+  max-height: min(400px, 50vh);
+}
+
+/* Placeholder art is an inline SVG with no intrinsic size, so unlike an <img> it needs the box
+   to tell it how tall to be. */
+.fl-shot > .fl-ph {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+}
+.fl-shot--modal > .fl-ph {
+  aspect-ratio: auto;
+  height: min(240px, 30vh);
+}
+
+/* the hero doubles as the way into the full-size view */
+.fl-shot--zoom {
+  cursor: zoom-in;
+  transition: border-color 0.15s ease-out;
+}
+.fl-shot--zoom:hover {
+  border-color: var(--accent-line);
+}
+.fl-shot--zoom:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+@media (max-width: 767px) {
+  .fl-shot--page.is-wide img,
+  .fl-shot--page.is-measuring img,
+  .fl-shot--page.is-tall img {
+    max-height: 340px;
+  }
+  .fl-shot--page.is-tall {
+    padding: var(--space-4);
+  }
+  .fl-shot--modal.is-wide img,
+  .fl-shot--modal.is-measuring img {
+    max-height: 190px;
+  }
+  .fl-shot--modal.is-tall img {
+    max-height: 280px;
+  }
+}
+
+/* ---------- mobile drawer: it animated in, so it should animate out ---------- */
+.fl-scrim--fade {
+  animation: fl-fade-in 0.2s ease-out;
+}
+.fl-scrim--fade.is-closing {
+  animation: fl-fade-in 0.2s ease-in reverse forwards;
+}
+.fl-drawer.is-closing {
+  animation: fl-drawer-out 0.2s ease-in forwards;
+}
+@keyframes fl-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fl-drawer-out {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fl-scrim--fade,
+  .fl-scrim--fade.is-closing,
+  .fl-drawer.is-closing {
+    animation: none;
+  }
+}
+
+/* ---------- card slider ---------- */
+/* Native scrolling with snap points, so touch and trackpad swipe come for free. The track
+   bleeds to the page edge on mobile so a card can sit half-visible and read as "there's more". */
+.fl-slider {
+  position: relative;
+}
+.fl-slider__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--slide-w, minmax(0, 1fr));
+  gap: var(--gutter);
+  margin: 0;
+  padding: 0 0 var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+  /* the row drifts on its own, so nothing here may snap or smooth-scroll */
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+.fl-slider__track:active {
+  cursor: grabbing;
+}
+/* a drag must not paint text selection across the cards it passes over */
+.fl-slider__track,
+.fl-slider__track * {
+  user-select: none;
+}
+.fl-slider__track img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.fl-slider__track::-webkit-scrollbar {
+  display: none;
+}
+/* The track's items stretch to the tallest, but the card inside each has to be told to fill it
+   — otherwise every card is its own content height and the row ends up ragged. The system asks
+   for equal heights with the footer pinned to the bottom. */
+.fl-slider__track > * {
+  min-width: 0;
+  display: flex;
+}
+.fl-slider__track > * > * {
+  flex: 1;
+  min-width: 0;
+}
+.fl-slider__track:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-card);
+}
+/* three across on desktop, two on tablet, then one-and-a-peek on a phone */
+.fl-slider--cards .fl-slider__track {
+  grid-auto-columns: calc((100% - 2 * var(--gutter)) / 3);
+}
+@media (max-width: 1023px) {
+  .fl-slider--cards .fl-slider__track {
+    grid-auto-columns: calc((100% - var(--gutter-tablet)) / 2);
+    gap: var(--gutter-tablet);
+  }
+}
+@media (max-width: 767px) {
+  .fl-slider--cards .fl-slider__track {
+    grid-auto-columns: 82%;
+    gap: var(--gutter-mobile);
+    padding-right: var(--margin-page-mobile);
+  }
+}
+
+/* ---------- project thumbnails ---------- */
+/* The system's `.fl-pcard__thumb` crops to 16:10. Real assets include phone mockups and tall
+   charts, so those are contained on the elevated ground instead of being cropped to nonsense. */
+.fl-pcard__thumb--contain > img {
+  object-fit: contain;
+  padding: var(--space-3);
+}
+
+/* ---------- galleries ---------- */
+/* Real screenshots come in mixed aspect ratios, so they are contained inside the system's
+   16:10 well rather than cropped; phone screens get a portrait well instead. */
+.fl-gallery__img > img {
+  object-fit: contain;
+  background: var(--surface-elevated);
+}
+.fl-gallery__btn {
+  padding: 0;
+  cursor: zoom-in;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.fl-gallery__btn:hover {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-md);
+}
+.fl-gallery__btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.fl-gallery--phone {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.fl-gallery--phone .fl-gallery__img {
+  aspect-ratio: 3 / 4;
+}
+@media (max-width: 1023px) {
+  .fl-gallery--phone {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .fl-gallery--phone {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* a single wide figure (architecture diagrams) */
+.fl-figure {
+  display: block;
+  width: 100%;
+  padding: var(--space-6);
+  background: var(--surface-elevated);
+  border: var(--border-hair) solid var(--outline);
+  border-radius: var(--radius-lg);
+  cursor: zoom-in;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.fl-figure:hover {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-md);
+}
+.fl-figure:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.fl-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 70vh;
+  margin: 0 auto;
+}
+
+.fl-video {
+  margin: 0;
+}
+.fl-video video {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: var(--border-hair) solid var(--outline);
+  background: var(--surface-elevated);
+}
+.fl-video figcaption {
+  margin-top: var(--space-2);
+  font: 400 12px/18px var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* ---------- contributors ---------- */
+.fl-people {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fl-people li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.fl-people img {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: var(--border-hair) solid var(--outline);
+  background: var(--surface-elevated);
+}
+.fl-people__name {
+  margin: 0;
+  font: 600 15px/22px var(--font-sans);
+  color: var(--text);
+}
+.fl-people__role {
+  margin: 0;
+  font: 400 13px/20px var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* ---------- contact page ---------- */
+.fl-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-12);
+  align-items: start;
+}
+.fl-contact__side {
+  display: grid;
+  gap: var(--space-6);
+}
+@media (max-width: 1023px) {
+  .fl-contact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.fl-details {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+.fl-details li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.fl-details .fl-i {
+  margin-top: 3px;
+  color: var(--accent);
+}
+.fl-details__label {
+  margin: 0;
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.fl-details__value {
+  margin: 2px 0 0;
+  font: 400 15px/22px var(--font-sans);
+  color: var(--text);
+  word-break: break-word;
+}
+.fl-details__link {
+  color: var(--accent);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.fl-details__link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- modal (project details, image lightbox) ---------- */
+.fl-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  display: grid;
+  place-items: center;
+  padding: var(--space-6);
+}
+/* The system's `.fl-scrim` carries a global `z-index: var(--z-scrim)` (50) because it is designed
+   to sit beside the drawer in the root stacking context. `.fl-modal` has its own z-index, so it
+   IS a stacking context, and 50 there beat the panel — the scrim painted over the panel, tinting
+   it and swallowing every click. Inside this wrapper the scrim needs no z-index of its own. */
+.fl-modal > .fl-scrim {
+  z-index: 0;
+}
+
+.fl-modal__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(1040px, 100%);
+  max-height: 92vh;
+  overflow: hidden;
+  background: var(--surface-elevated);
+  border: var(--border-hair) solid var(--outline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: fl-modal-in 0.2s ease-out;
+}
+.fl-modal__panel:focus {
+  outline: none;
+}
+@keyframes fl-modal-in {
+  from {
+    transform: translateY(10px) scale(0.99);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fl-modal__panel {
+    animation: none;
+  }
+}
+.fl-modal__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+}
+.fl-modal__eyebrow {
+  margin: 0;
+  font: 500 13px/20px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.fl-modal--image .fl-modal__panel {
+  padding: 0 var(--space-4) var(--space-4);
+}
+/* the lightbox can be opened from the project modal, so it sits a layer above it */
+.fl-modal--image {
+  z-index: var(--z-toast);
+}
+.fl-modal__img {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+@media (max-width: 767px) {
+  .fl-modal {
+    padding: var(--space-4);
+  }
+}
+
+/* ---------- project modal ---------- */
+.fl-pm__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex: none;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-6);
+  border-bottom: var(--border-hair) solid var(--outline);
+}
+.fl-pm__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.fl-pm__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.fl-pm__main {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6);
+}
+.fl-pm__title {
+  margin: 0;
+  font: 300 36px/44px var(--font-sans);
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.fl-pm__tagline {
+  margin: calc(var(--space-4) * -1) 0 0;
+  font: 400 18px/30px var(--font-sans);
+  color: var(--text);
+}
+.fl-pm__desc {
+  margin: 0;
+  max-width: 68ch;
+  font: 400 16px/26px var(--font-sans);
+  color: var(--text-muted);
+}
+.fl-pm__label {
+  margin: 0 0 var(--space-3);
+  font: 500 13px/20px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.fl-pm__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: var(--space-5) 0;
+  border-top: var(--border-hair) solid var(--outline);
+  border-bottom: var(--border-hair) solid var(--outline);
+}
+.fl-pm__meta dt {
+  margin: 0 0 var(--space-1);
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.fl-pm__meta dd {
+  margin: 0;
+  font: 400 15px/22px var(--font-sans);
+  color: var(--text);
+}
+.fl-pm__shots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fl-pm__shots--phone {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.fl-pm__shots button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--surface);
+  border: var(--border-hair) solid var(--outline);
+  border-radius: var(--radius-md);
+  cursor: zoom-in;
+  transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+.fl-pm__shots--phone button {
+  aspect-ratio: 3 / 4;
+}
+.fl-pm__shots button:hover {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-md);
+}
+.fl-pm__shots button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.fl-pm__shots img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+.fl-pm__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  flex: none;
+  padding: var(--space-5) var(--space-6);
+  background: var(--surface);
+  border-top: var(--border-hair) solid var(--outline);
+}
+.fl-pm__actionrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.fl-pm__nolinks {
+  margin: 0;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .fl-pm__main,
+  .fl-pm__actions {
+    padding: var(--space-5) var(--space-4);
+  }
+  .fl-pm__bar {
+    padding-left: var(--space-4);
+  }
+  .fl-pm__title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .fl-pm__shots,
+  .fl-pm__shots--phone {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .fl-pm__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fl-pm__actionrow .fl-btn {
+    flex: 1;
+  }
+}
+
+.fl-pcard__foot {
+  align-items: center;
+}
+
+/* ---------- 404 ---------- */
+.fl-notfound {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+  max-width: 44em;
+}
+.fl-notfound .fl-t-h1,
+.fl-notfound .fl-t-lead {
+  margin: 0;
+}
+.fl-notfound .fl-eyebrow {
+  margin: 0;
+}
+
+/* ---------- one-page sections ---------- */
+/* Every nav destination is a section of the home page, so each one has to come to rest below
+   the sticky nav rather than under it. Keeping the offset here, as scroll-margin, means the
+   nav's own height is the only number involved — `scrollIntoView` needs no arithmetic. */
+.fl-anchor {
+  scroll-margin-top: calc(var(--nav-height) + var(--space-4));
+}
+@media (max-width: 1023px) {
+  .fl-anchor {
+    scroll-margin-top: calc(var(--nav-height-mobile) + var(--space-4));
+  }
+}
+
+/* Education, papers and certifications used to open a page each. Folded into their section
+   they need a visible break, or they read as one undifferentiated run of cards. */
+.fl-subsection {
+  margin-top: var(--space-12);
+  padding-top: var(--space-10);
+  border-top: var(--border-hair) solid var(--outline);
+}
+@media (max-width: 767px) {
+  .fl-subsection {
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+  }
+}
+
+/* The nav used to mark the current page; it now marks the section you are reading, which ARIA
+   spells `location`. Same underline, so the bar looks no different — it just keeps up. */
+.fl-nav__link[aria-current='location'] {
+  color: var(--text);
+  font-weight: 600;
+}
+.fl-nav__link[aria-current='location']::after {
+  content: '';
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.fl-drawer__link[aria-current='location'] {
+  color: var(--accent);
+}
+
+/* ---------- a project's stack, as brand marks ---------- */
+/* Replaces the text chips on project cards. A mark is about a third the width of the word it
+   stands for, so a five-tool stack now reads as one short row instead of wrapping to three. */
+.fl-techtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fl-techtag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: var(--border-hair) solid var(--outline);
+  background: var(--surface-elevated);
+  color: var(--text);
+  transition: color 0.15s ease-out, border-color 0.15s ease-out;
+}
+.fl-techtag .fl-techlogo {
+  width: 24px;
+  height: 24px;
+  color: inherit;
+}
+.fl-techtag:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+.fl-techtag--more {
+  width: auto;
+  min-width: 40px;
+  padding: 0 var(--space-2);
+  border-style: dashed;
+  border-color: var(--accent-line);
+  color: var(--accent-ink);
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* In the modal and the case study the stack is read rather than glanced at, so each mark keeps
+   its name — the silhouettes alone are not all recognisable, Flask and Supabase least of all. */
+.fl-techtags--labelled .fl-techtag {
+  width: auto;
+  height: 28px;
+  padding: 0 10px 0 8px;
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.fl-techtags--labelled .fl-techlogo {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+}
+
+/* The social row sits inside the details list now, as one more way of reaching him, so its
+   note needs the same muted voice as the labels above it rather than the drawer's. */
+.fl-details__note {
+  margin: var(--space-3) 0 0;
+  font: 400 12px/18px var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+.fl-details .fl-cta__social {
+  margin-top: var(--space-2);
+}

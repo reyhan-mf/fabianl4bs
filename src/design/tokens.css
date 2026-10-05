@@ -1,0 +1,122 @@
+/* Generated from the fabianl4bs design system (tokens.json). Do not hand-edit. */
+
+/* Theme = data-theme on <html>. Dark (maroon) is the default; light (cream) is the alternate. */
+
+:root,
+:root[data-theme="dark"] {
+  --brand-maroon: #5b1122;
+  --brand-maroon-deep: #3e0b17;
+  --brand-gold: #ce8540;
+  --brand-offwhite: #fbf6f1;
+  --brand-cream: #f4e6d6;
+  --bg: #5b1122;
+  --surface: #3e0b17;
+  --surface-elevated: #2e0811;
+  --text: #fbf6f1;
+  --text-muted: #cfb5aa;
+  --accent: #ce8540;
+  --accent-hover: #e6ac74;
+  --accent-ink: #e6ac74;
+  --accent-subtle: #ce85402e;
+  --accent-line: #ce854099;
+  --accent-fill: #ce8540;
+  --accent-fill-hover: #dd9d5e;
+  --accent-fill-active: #c27b38;
+  --on-accent: #3e0b17;
+  --outline: #fbf6f11f;
+  --outline-strong: #a47c80;
+  --overlay-hover: #fbf6f114;
+  --overlay-press: #fbf6f124;
+  --scrim: #160308b3;
+  --focus-ring: #f6d5a8;
+  --success: #9fd8a8;
+  --danger: #ffa89c;
+  --shadow-sm: 0 1px 2px #16030866;
+  --shadow-md: 0 2px 4px #1603084d, 0 12px 24px -8px #16030899;
+  --shadow-lg: 0 8px 16px #16030859, 0 24px 48px -12px #160308b3;
+}
+
+:root[data-theme="light"] {
+  --brand-maroon: #5b1122;
+  --brand-maroon-deep: #3e0b17;
+  --brand-gold: #ce8540;
+  --brand-offwhite: #fbf6f1;
+  --brand-cream: #f4e6d6;
+  --bg: #f4e6d6;
+  --surface: #fbf6f1;
+  --surface-elevated: #fffdfb;
+  --text: #3e0b17;
+  --text-muted: #744a50;
+  --accent: #8f4f17;
+  --accent-hover: #6e3b0e;
+  --accent-ink: #7e4512;
+  --accent-subtle: #ce85402e;
+  --accent-line: #8f4f1780;
+  --accent-fill: #ce8540;
+  --accent-fill-hover: #dd9d5e;
+  --accent-fill-active: #c27b38;
+  --on-accent: #3e0b17;
+  --outline: #5b11221f;
+  --outline-strong: #8e6e72;
+  --overlay-hover: #5b112212;
+  --overlay-press: #5b112224;
+  --scrim: #3e0b1773;
+  --focus-ring: #5b1122;
+  --success: #2a6636;
+  --danger: #a8231c;
+  --shadow-sm: 0 1px 2px #5b112214, 0 1px 3px #5b11221a;
+  --shadow-md: 0 2px 4px #5b112210, 0 12px 24px -10px #5b11222e;
+  --shadow-lg: 0 8px 16px #5b112214, 0 24px 48px -16px #5b112240;
+}
+
+:root {
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-sm: 6px;
+  --radius-button: 10px;
+  --radius-md: 12px;
+  --radius-card: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --container-max: 1200px;
+  --grid-columns: 12;
+  --gutter: 24px;
+  --gutter-tablet: 20px;
+  --gutter-mobile: 16px;
+  --margin-page: 32px;
+  --margin-page-mobile: 20px;
+  --nav-height: 72px;
+  --nav-height-mobile: 64px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --illo-md: 48px;
+  --illo-lg: 64px;
+  --stroke-ui: 2;
+  --stroke-illo: 2.5;
+  --border-hair: 1px;
+  --border-control: 1.5px;
+  --border-accent: 2.5px;
+  --opacity-disabled: 0.45;
+  --opacity-float: 0.16;
+  --z-nav: 40;
+  --z-scrim: 50;
+  --z-drawer: 60;
+  --z-toast: 70;
+}

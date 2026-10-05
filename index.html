@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/img/brand/avatar.png" />
+    <link rel="apple-touch-icon" href="/img/brand/avatar.png" />
+
+    <!-- The head below is the shell. `scripts/prerender.jsx` rewrites every tag in it per route
+         after the build, so each page ships its own title, description, canonical, social cards
+         and JSON-LD. Edit the shape here; edit the per-route values there. -->
+
+    <title>Reyhan Mochamad Fabian (fabianl4bs) — Developer &amp; ML Engineer</title>
+    <meta
+      name="description"
+      content="Reyhan Mochamad Fabian — known as fabianl4bs. Web Developer at CrescentRating, Computer Engineering graduate of Universitas Pendidikan Indonesia, with 15 web, mobile and AI projects and four published papers. Based in Bandung, Indonesia."
+    />
+    <link rel="canonical" href="https://fabianl4bs.com/" />
+    <meta name="author" content="Reyhan Mochamad Fabian" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#5b1122" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="fabianl4bs" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Reyhan" />
+    <meta property="profile:last_name" content="Fabian" />
+    <meta property="profile:username" content="fabianl4bs" />
+    <meta property="og:url" content="https://fabianl4bs.com/" />
+    <meta property="og:title" content="Reyhan Mochamad Fabian (fabianl4bs) — Developer &amp; ML Engineer" />
+    <meta
+      property="og:description"
+      content="Web Developer at CrescentRating and Computer Engineering graduate of UPI. 15 web, mobile and AI projects, four published papers. Bandung, Indonesia."
+    />
+    <meta property="og:image" content="https://fabianl4bs.com/img/brand/avatar.png" />
+    <meta property="og:image:alt" content="Reyhan Mochamad Fabian — portrait" />
+
+    <!-- LinkedIn, WhatsApp and X never run JavaScript, so a link preview can only ever show what
+         is written here. These stay static for that reason. -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Reyhan Mochamad Fabian (fabianl4bs) — Developer &amp; ML Engineer" />
+    <meta
+      name="twitter:description"
+      content="Web Developer at CrescentRating and Computer Engineering graduate of UPI. 15 web, mobile and AI projects, four published papers. Bandung, Indonesia."
+    />
+    <meta name="twitter:image" content="https://fabianl4bs.com/img/brand/avatar.png" />
+
+    <!-- Replaced per route by the prerenderer. Tells a search engine *which* Reyhan Fabian this
+         is, and wires the claim to the profiles and papers that already corroborate it. -->
+    <script type="application/ld+json">
+      {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;600&display=swap"
+    />
+
+    <script>
+      /* Dark is the only theme now, set on <html> above. This clears the preference a visitor
+         saved back when there was a toggle, so an old 'light' cannot linger in their browser. */
+      (function () {
+        try {
+          localStorage.removeItem('fl-theme');
+        } catch (e) {
+          /* private mode or blocked storage — nothing to clear */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

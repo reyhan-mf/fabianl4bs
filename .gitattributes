@@ -1,0 +1,11 @@
+# Normalise line endings in the repo, so a checkout on Windows and one on the Linux box that
+# builds the deploy produce identical files — and a machine switch is not a 171-file diff.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.pdf binary
