@@ -136,6 +136,23 @@ for (const p of projects) {
   ]);
 }
 
+// ---- 404 ----
+/* Vercel serves `404.html` for anything unmatched, with a real 404 status. That is the pairing
+   worth having: a branded page *and* an honest status code. The alternative — a catch-all
+   rewrite answering every bogus URL with 200 and the app shell — is a soft 404, which Google
+   flags in Search Console as a page claiming to exist when it does not. Rendered at `/404`
+   because any unknown path produces the same NotFound markup, so it hydrates wherever it lands.
+   Deliberately kept out of the sitemap below. */
+fs.writeFileSync(
+  path.join(dist, '404.html'),
+  page({
+    url: '/404',
+    title: 'Page not found — fabianl4bs',
+    description: 'That page is not part of this site. The projects, experience and contact details are all on the home page.',
+    jsonld: homeGraph,
+  })
+);
+
 // ---- sitemap ----
 /* Built from the same list that was just rendered, so a sitemap entry cannot point at a page
    that does not exist. */
@@ -161,4 +178,4 @@ fs.writeFileSync(
 
 console.log(`prerendered ${written.length} pages:`);
 for (const [route] of written) console.log(`  ${route}`);
-console.log(`sitemap.xml (${written.length} urls) and robots.txt written`);
+console.log(`404.html, sitemap.xml (${written.length} urls) and robots.txt written`);
