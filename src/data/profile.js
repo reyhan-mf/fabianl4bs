@@ -39,6 +39,7 @@ export const profile = {
   social: [
     { id: 'github', label: 'GitHub', href: 'https://github.com/reyhan-mf' },
     { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/reyhan-mf/' },
+    { id: 'x', label: 'X', href: 'https://x.com/fabianl4bs' },
     { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/reyhanmf50/' },
     { id: 'email', label: 'Email', href: 'mailto:fabianl4bs@gmail.com' },
   ],
